@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+var router = mux.NewRouter()
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！</h1>")
@@ -38,6 +40,26 @@ func aritlcesIndexHandler(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprint(w,"访问文章列表")
 }
 
+func aritlcesCreateHandler(w http.ResponseWriter, r *http.Request)  {
+	html := `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>创建文章 —— 我的技术博客</title>
+</head>
+<body>
+    <form action="%s" method="post">
+        <p><input type="text" name="title"></p>
+        <p><textarea name="body" cols="30" rows="10"></textarea></p>
+        <p><button type="submit">提交</button></p>
+    </form>
+</body>
+</html>
+`
+	storeURL, _ := router.Get("articles.store").URL()
+	fmt.Fprintf(w, html, storeURL)
+}
+
 func aritlcesStoreHandler(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprint(w, "创建新的文章")
 }
@@ -59,22 +81,21 @@ func removeTrailingSlash(next http.Handler) http.Handler {
 }
 
 func main()  {
-	router := mux.NewRouter()
-
 	router.HandleFunc("/", homeHandler).Methods("GET").Name("home")
 	router.HandleFunc("/about", aboutHandler).Methods("GET").Name("about")
 
 	router.HandleFunc("/articles/{id:[0-9]+}", aritlcesShowHandler).Methods("GET").Name("articles.show")
 	router.HandleFunc("/articles", aritlcesIndexHandler).Methods("GET").Name("articles.index")
+	router.HandleFunc("/articles/create", aritlcesCreateHandler).Methods("GET").Name("articles.create")
 	router.HandleFunc("/articles", aritlcesStoreHandler).Methods("POST").Name("articles.store")
 
 	router.NotFoundHandler = http.HandlerFunc(notFoundHandler)
 	router.Use(forceHTMLMiddleware)
 
-	homeURL, _ := router.Get("home").URL()
-	fmt.Println("homeURL: ", homeURL)
-	articleURL, _ := router.Get("articles.show").URL("id", "23")
-	fmt.Println("articleURL: ", articleURL)
+	//homeURL, _ := router.Get("home").URL()
+	//fmt.Println("homeURL: ", homeURL)
+	//articleURL, _ := router.Get("articles.show").URL("id", "23")
+	//fmt.Println("articleURL: ", articleURL)
 
 	http.ListenAndServe(":3000", removeTrailingSlash(router))
 }
