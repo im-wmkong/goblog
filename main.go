@@ -30,15 +30,6 @@ type Article struct {
 	ID          int64
 }
 
-func (a Article) Link() string {
-	showURL, err := router.Get("articles.show").URL("id", strconv.FormatInt(a.ID, 10))
-	if err != nil {
-		logger.LogError(err)
-		return ""
-	}
-	return showURL.String()
-}
-
 func (a Article) Delete() (rowsAffected int64, err error) {
 	rs, err := db.Exec("DELETE FROM articles WHERE id = " + strconv.FormatInt(a.ID, 10))
 	if err != nil {
@@ -57,15 +48,6 @@ func getArticleById(id string) (Article, error) {
 	return article, err
 }
 
-func RouteName2URL(routeName string, pairs ...string) string {
-	url, err := router.Get(routeName).URL(pairs...)
-	if err != nil {
-		logger.LogError(err)
-		return ""
-	}
-	return url.String()
-}
-
 func validateArticleFormData(title, body string) map[string]string {
 	errors := make(map[string]string)
 
@@ -81,32 +63,6 @@ func validateArticleFormData(title, body string) map[string]string {
 		errors["body"] = "内容长度需要大于等于 10 个字节"
 	}
 	return errors
-}
-
-func aritlcesShowHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func aritlcesIndexHandler(w http.ResponseWriter, r *http.Request) {
-	rows, err := db.Query("SELECT * from articles")
-	logger.LogError(err)
-	defer rows.Close()
-
-	var articles []Article
-	for rows.Next() {
-		var article Article
-		err := rows.Scan(&article.ID, &article.Title, &article.Body)
-		logger.LogError(err)
-		articles = append(articles, article)
-	}
-
-	err = rows.Err()
-	logger.LogError(err)
-
-	tmpl, err := template.ParseFiles("resources/views/articles/index.gohtml")
-	logger.LogError(err)
-
-	tmpl.Execute(w, articles)
 }
 
 func aritlcesCreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -308,7 +264,6 @@ func main() {
 	bootstrap.SetupDB()
 	router = bootstrap.SetupRoute()
 
-	router.HandleFunc("/articles", aritlcesIndexHandler).Methods("GET").Name("articles.index")
 	router.HandleFunc("/articles/create", aritlcesCreateHandler).Methods("GET").Name("articles.create")
 	router.HandleFunc("/articles", aritlcesStoreHandler).Methods("POST").Name("articles.store")
 	router.HandleFunc("/articles/{id:[0-9]+}/edit", articlesEditHandler).Methods("GET").Name("articles.edit")

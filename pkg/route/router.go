@@ -6,10 +6,14 @@ import (
 )
 
 // Router 路由对象
-var Router *mux.Router
+var route *mux.Router
+
+func SetRoute(r *mux.Router)  {
+	route = r
+}
 
 func Name2URL(routeName string, pairs ...string) string {
-	url, err := Router.Get(routeName).URL(pairs...)
+	url, err := route.Get(routeName).URL(pairs...)
 	if err != nil {
 		return ""
 	}
