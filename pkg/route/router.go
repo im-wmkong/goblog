@@ -12,6 +12,10 @@ func SetRoute(r *mux.Router)  {
 	route = r
 }
 
+func GetRoute() *mux.Router {
+	return route
+}
+
 func Name2URL(routeName string, pairs ...string) string {
 	url, err := route.Get(routeName).URL(pairs...)
 	if err != nil {
