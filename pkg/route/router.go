@@ -8,7 +8,7 @@ import (
 // Router 路由对象
 var route *mux.Router
 
-func SetRoute(r *mux.Router)  {
+func SetRoute(r *mux.Router) {
 	route = r
 }
 

@@ -13,7 +13,6 @@ import (
 )
 
 type ArticlesController struct {
-
 }
 
 type ArticlesFormData struct {
@@ -22,7 +21,7 @@ type ArticlesFormData struct {
 	Errors      map[string]string
 }
 
-func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request)  {
+func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	article, err := article.Get(id)
 
@@ -60,7 +59,7 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request)  {
+func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 	storeURL := route.Name2URL("articles.store")
 	data := ArticlesFormData{
 		Title:  "",
@@ -88,7 +87,7 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 		}
 		_article.Create()
 		if _article.ID > 0 {
-			fmt.Fprint(w, "插入成功，ID 为" + types.Int64ToString(_article.ID))
+			fmt.Fprint(w, "插入成功，ID 为"+types.Int64ToString(_article.ID))
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprint(w, "500 内部服务器错误")
@@ -109,7 +108,7 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request)  {
+func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	article, err := article.Get(id)
 
@@ -136,7 +135,7 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request)  {
+func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	_article, err := article.Get(id)
 
@@ -188,7 +187,7 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request)  {
+func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	_article, err := article.Get(id)
 	if err != nil {

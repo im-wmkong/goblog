@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func SetupDB()  {
+func SetupDB() {
 	db := model.ConnectDB()
 
 	sqlDB, _ := db.DB()

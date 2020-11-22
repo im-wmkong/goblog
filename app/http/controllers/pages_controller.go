@@ -6,7 +6,6 @@ import (
 )
 
 type PagesController struct {
-
 }
 
 func (*PagesController) Home(w http.ResponseWriter, r *http.Request) {

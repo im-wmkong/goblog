@@ -8,7 +8,7 @@ import (
 )
 
 // RegisterWebRoutes 注册网页相关路由
-func RegisterWebRoutes(r *mux.Router)  {
+func RegisterWebRoutes(r *mux.Router) {
 	r.Use(middlewares.ForceHTML)
 
 	pc := new(controllers.PagesController)

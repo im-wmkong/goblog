@@ -7,7 +7,7 @@ import (
 )
 
 // 路由初始化
-func SetupRoute() *mux.Router  {
+func SetupRoute() *mux.Router {
 	router := mux.NewRouter()
 	routes.RegisterWebRoutes(router)
 
