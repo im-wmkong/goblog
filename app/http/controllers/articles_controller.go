@@ -14,13 +14,6 @@ import (
 type ArticlesController struct {
 }
 
-type ArticlesFormData struct {
-	Title, Body string
-	URL         string
-	Article article.Article
-	Errors      map[string]string
-}
-
 func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	_article, err := article.Get(id)
@@ -51,7 +44,7 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
-	view.Render(w, ArticlesFormData{}, "articles.create", "articles._form_field")
+	view.Render(w, view.D{}, "articles.create", "articles._form_field")
 }
 
 func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
@@ -73,10 +66,10 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprint(w, "500 内部服务器错误")
 		}
 	} else {
-		view.Render(w, ArticlesFormData{
-			Title:  title,
-			Body:   body,
-			Errors: errors,
+		view.Render(w, view.D{
+			"Title":  title,
+			"Body":   body,
+			"Errors": errors,
 		}, "articles.create", "articles._form_field")
 	}
 }
@@ -102,11 +95,11 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		// 4. 读取成功，显示编辑文章表单
-		view.Render(w, ArticlesFormData{
-			Title:   _article.Title,
-			Body:    _article.Body,
-			Article: _article,
-			Errors:  nil,
+		view.Render(w, view.D{
+			"Title":   _article.Title,
+			"Body":    _article.Body,
+			"Article": _article,
+			"Errors":  nil,
 		}, "articles.edit", "articles._form_field")
 	}
 }
@@ -149,11 +142,11 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			//验证不通过
-			view.Render(w, ArticlesFormData{
-				Title:   title,
-				Body:    body,
-				Article: _article,
-				Errors:  errors,
+			view.Render(w, view.D{
+				"Title":   title,
+				"Body":    body,
+				"Article": _article,
+				"Errors":  errors,
 			}, "articles.edit", "articles._form_field")
 		}
 	}
