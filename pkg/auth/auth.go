@@ -1,8 +1,10 @@
 package auth
 
 import (
+	"errors"
 	"goblog/app/models/user"
 	"goblog/pkg/session"
+	"gorm.io/gorm"
 )
 
 // getUID 获取字符串uid
@@ -25,7 +27,31 @@ func User() user.User {
 	}
 	return user.User{}
 }
-//
-//func ()  {
-//
-//}
+
+// Attempt 尝试登录
+func Attempt(email, password string) error {
+	_user, err := user.GetByEmail(email)
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return errors.New("账号不存在或密码错误")
+		} else {
+			return errors.New("内部错误，请稍后尝试")
+		}
+	}
+
+	if !_user.ComparePassword(password) {
+		return errors.New("账号不存在或密码错误")
+	}
+	session.Put("uid", _user.GetStringID())
+
+	return nil
+}
+
+func Logout()  {
+	session.Forget("uid")
+}
+
+func Check() bool {
+	return len(getUID()) > 0
+}
