@@ -1,6 +1,7 @@
 package requests
 
 import (
+	"fmt"
 	"github.com/thedevsaddam/govalidator"
 	"goblog/app/models/user"
 )
@@ -8,8 +9,8 @@ import (
 // ValidateRegistrationForm 验证表单，返回 errs 长度等于零即通过
 func ValidateRegistrationForm(data user.User) map[string][]string {
 	rules := govalidator.MapData{
-		"name": []string{"required", "alpha_num", "between:3,20"},
-		"email": []string{"required", "min:4", "max:30", "email"},
+		"name": []string{"required", "alpha_num", "between:3,20", "not_exists:users,name"},
+		"email": []string{"required", "min:4", "max:30", "email", "not_exists:user,email"},
 		"password": []string{"required", "min:6"},
 		"password_comfirm": []string{"required"},
 	}
@@ -44,6 +45,7 @@ func ValidateRegistrationForm(data user.User) map[string][]string {
 	if data.Password != data.PasswordComfirm {
 		errs["password_comfirm"] = append(errs["password_comfirm"], "两次输入密码不匹配！")
 	}
+	fmt.Println(errs)
 
 	return errs
 }
