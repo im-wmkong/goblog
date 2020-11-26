@@ -10,7 +10,7 @@ import (
 // getUID 获取字符串uid
 func getUID() string {
 	uid := session.Get("uid")
-	if uidstr, ok := uid.(string); ok && len(uidstr) > 0{
+	if uidstr, ok := uid.(string); ok && len(uidstr) > 0 {
 		return uidstr
 	}
 	return ""
@@ -48,7 +48,7 @@ func Attempt(email, password string) error {
 	return nil
 }
 
-func Logout()  {
+func Logout() {
 	session.Forget("uid")
 }
 

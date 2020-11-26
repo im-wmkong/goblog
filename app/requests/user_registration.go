@@ -9,9 +9,9 @@ import (
 // ValidateRegistrationForm 验证表单，返回 errs 长度等于零即通过
 func ValidateRegistrationForm(data user.User) map[string][]string {
 	rules := govalidator.MapData{
-		"name": []string{"required", "alpha_num", "between:3,20", "not_exists:users,name"},
-		"email": []string{"required", "min:4", "max:30", "email", "not_exists:user,email"},
-		"password": []string{"required", "min:6"},
+		"name":             []string{"required", "alpha_num", "between:3,20", "not_exists:users,name"},
+		"email":            []string{"required", "min:4", "max:30", "email", "not_exists:user,email"},
+		"password":         []string{"required", "min:6"},
 		"password_comfirm": []string{"required"},
 	}
 	messages := govalidator.MapData{
@@ -38,7 +38,7 @@ func ValidateRegistrationForm(data user.User) map[string][]string {
 		Data:          &data,
 		Rules:         rules,
 		TagIdentifier: "valid",
-		Messages: messages,
+		Messages:      messages,
 	}
 
 	errs := govalidator.New(opts).ValidateStruct()

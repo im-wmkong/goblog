@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func init()  {
+func init() {
 	govalidator.AddCustomRule("not_exists", func(field string, rule string, message string, value interface{}) error {
 		rng := strings.Split(strings.TrimPrefix(rule, "not_exists:"), ",")
 		fmt.Println(rng)

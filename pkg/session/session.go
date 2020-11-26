@@ -7,13 +7,13 @@ import (
 )
 
 var (
-	Store = sessions.NewCookieStore([]byte("33446a9dcf9ea060a0a6532b166da32f304af0de"))
-	Session *sessions.Session
-	Request *http.Request
+	Store    = sessions.NewCookieStore([]byte("33446a9dcf9ea060a0a6532b166da32f304af0de"))
+	Session  *sessions.Session
+	Request  *http.Request
 	Response http.ResponseWriter
 )
 
-func StartSession(w http.ResponseWriter, r *http.Request)  {
+func StartSession(w http.ResponseWriter, r *http.Request) {
 	var err error
 	Session, err = Store.Get(r, "goblog-session")
 	logger.LogError(err)
@@ -22,7 +22,7 @@ func StartSession(w http.ResponseWriter, r *http.Request)  {
 }
 
 // Put 写入键值对应的会话数据
-func Put(key string, value interface{})  {
+func Put(key string, value interface{}) {
 	Session.Values[key] = value
 	Save()
 }
@@ -33,18 +33,18 @@ func Get(key string) interface{} {
 }
 
 // Forget 删除某个会话项
-func Forget(key string)  {
+func Forget(key string) {
 	delete(Session.Values, key)
 	Save()
 }
 
-func Flush()  {
+func Flush() {
 	Session.Options.MaxAge = -1
 	Save()
 }
 
 // Flush 删除当前会话
-func Save()  {
+func Save() {
 	err := Session.Save(Request, Response)
 	logger.LogError(err)
 }

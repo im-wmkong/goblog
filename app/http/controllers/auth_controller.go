@@ -10,14 +10,13 @@ import (
 )
 
 type AuthController struct {
-
 }
 
-func (*AuthController) Register(w http.ResponseWriter, r *http.Request)  {
+func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
 	view.RenderSimple(w, view.D{}, "auth.register")
 }
 
-func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request)  {
+func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 	// 1. 初始化数据
 	_user := user.User{
 		Name:            r.PostFormValue("name"),
@@ -49,20 +48,20 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request)  {
 	}
 }
 
-func (*AuthController) Login(w http.ResponseWriter, r *http.Request)  {
+func (*AuthController) Login(w http.ResponseWriter, r *http.Request) {
 	view.RenderSimple(w, view.D{}, "auth.login")
 }
 
-func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request)  {
+func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 	email := r.PostFormValue("email")
 	password := r.PostFormValue("password")
 
-	if err := auth.Attempt(email, password); err == nil{
+	if err := auth.Attempt(email, password); err == nil {
 		http.Redirect(w, r, "/", http.StatusFound)
 	} else {
 		view.RenderSimple(w, view.D{
-			"Error": err.Error(),
-			"Email": email,
+			"Error":    err.Error(),
+			"Email":    email,
 			"Password": password,
 		}, "auth.login")
 	}

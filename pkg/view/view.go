@@ -18,17 +18,17 @@ func Render(w io.Writer, data interface{}, tplFiles ...string) {
 }
 
 // RenderSimple 渲染简单的视图
-func RenderSimple(w io.Writer, data interface{}, tplFiles ...string)  {
+func RenderSimple(w io.Writer, data interface{}, tplFiles ...string) {
 	RenderTemplate(w, "simple", data, tplFiles...)
 }
 
 // RenderTemplate 渲染视图
-func RenderTemplate(w io.Writer, name string, data interface{}, tplFiles ...string)  {
+func RenderTemplate(w io.Writer, name string, data interface{}, tplFiles ...string) {
 	// 1 设置模板相对路径
 	viewDir := "resources/views/"
 
 	// 2. 语法糖，将 articles.show 更正为 articles/show
-	for i,f := range tplFiles{
+	for i, f := range tplFiles {
 		tplFiles[i] = viewDir + strings.Replace(f, ".", "/", -1) + ".gohtml"
 	}
 
