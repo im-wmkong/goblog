@@ -1,7 +1,6 @@
 package requests
 
 import (
-	"fmt"
 	"github.com/thedevsaddam/govalidator"
 	"goblog/app/models/user"
 )
@@ -45,7 +44,6 @@ func ValidateRegistrationForm(data user.User) map[string][]string {
 	if data.Password != data.PasswordComfirm {
 		errs["password_comfirm"] = append(errs["password_comfirm"], "两次输入密码不匹配！")
 	}
-	fmt.Println(errs)
 
 	return errs
 }

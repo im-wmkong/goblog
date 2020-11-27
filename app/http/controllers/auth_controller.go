@@ -39,6 +39,7 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 		_user.Create()
 
 		if _user.ID > 0 {
+			auth.Login(_user)
 			// 登录用户并跳转到首页
 			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
