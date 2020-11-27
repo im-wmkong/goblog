@@ -73,7 +73,7 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	} else {
 		view.Render(w, view.D{
 			"Article": _article,
-			"Errors": errors,
+			"Errors":  errors,
 		}, "articles.create", "articles._form_field")
 	}
 }

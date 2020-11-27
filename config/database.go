@@ -2,7 +2,7 @@ package config
 
 import "goblog/pkg/config"
 
-func init()  {
+func init() {
 	config.Add("database", config.StrMap{
 		"mysql": map[string]interface{}{
 			// 数据库连接信息

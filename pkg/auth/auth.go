@@ -48,7 +48,7 @@ func Attempt(email, password string) error {
 	return nil
 }
 
-func Login(user user.User)  {
+func Login(user user.User) {
 	session.Put("uid", user.GetStringID())
 }
 

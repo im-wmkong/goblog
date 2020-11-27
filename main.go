@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func init()  {
+func init() {
 	config.Initialize()
 }
 

@@ -11,7 +11,7 @@ var Viper *viper.Viper
 
 type StrMap map[string]interface{}
 
-func init()  {
+func init() {
 	// 1. 初始化 Viper 库
 	Viper = viper.New()
 	// 2. 设置文件名称
@@ -40,7 +40,7 @@ func Env(envName string, defaultValue ...interface{}) interface{} {
 }
 
 // Add 新增配置项
-func Add(name string, configuration map[string]interface{})  {
+func Add(name string, configuration map[string]interface{}) {
 	Viper.Set(name, configuration)
 }
 

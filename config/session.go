@@ -2,7 +2,7 @@ package config
 
 import "goblog/pkg/config"
 
-func init()  {
+func init() {
 	config.Add("session", config.StrMap{
 		// 目前只支持 Cookie
 		"default": config.Env("SESSION_DRIVER", "cookie"),
