@@ -17,7 +17,7 @@ func init() {
 	// 2. 设置文件名称
 	Viper.SetConfigName(".env")
 	// 3. 配置类型，支持 "json", "toml", "yaml", "yml", "properties", "props", "prop", "env", "dotenv"
-	Viper.SetConfigType(".env")
+	Viper.SetConfigType("env")
 	// 4. 环境变量配置文件查找的路径，相对于 main.go
 	Viper.AddConfigPath(".")
 

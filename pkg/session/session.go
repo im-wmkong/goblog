@@ -8,11 +8,15 @@ import (
 )
 
 var (
-	Store    = sessions.NewCookieStore([]byte(config.GetString("app.key")))
+	Store    *sessions.CookieStore
 	Session  *sessions.Session
 	Request  *http.Request
 	Response http.ResponseWriter
 )
+
+func init() {
+	Store = sessions.NewCookieStore([]byte(config.GetString("app.key")))
+}
 
 func StartSession(w http.ResponseWriter, r *http.Request) {
 	var err error
