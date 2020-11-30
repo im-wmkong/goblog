@@ -6,7 +6,6 @@ import (
 	"goblog/app/policies"
 	"goblog/app/requests"
 	"goblog/pkg/auth"
-	"goblog/pkg/logger"
 	"goblog/pkg/route"
 	"goblog/pkg/view"
 	"net/http"
@@ -24,7 +23,7 @@ func (ac *ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 		ac.ResponseForSQLError(w, err)
 	} else {
 		view.Render(w, view.D{
-			"Article": _article,
+			"Article":          _article,
 			"CanModifyArticle": policies.CanModifyArticle(_article),
 		}, "articles.show", "articles._article_meta")
 	}
@@ -48,8 +47,8 @@ func (ac *ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	// 1. 初始化数据
 	_article := article.Article{
-		Title: r.PostFormValue("title"),
-		Body:  r.PostFormValue("body"),
+		Title:  r.PostFormValue("title"),
+		Body:   r.PostFormValue("body"),
 		UserID: auth.User().ID,
 	}
 
@@ -115,9 +114,7 @@ func (ac *ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 				// 验证通过，更新数据
 				rowsAffected, err := _article.Update()
 				if err != nil {
-					logger.LogError(err)
-					w.WriteHeader(http.StatusInternalServerError)
-					fmt.Fprint(w, "创建修改失败，请联系管理员")
+					ac.ResponseForSQLError(w, err)
 				}
 				// 更新成功，跳转到文章详情页
 				if rowsAffected > 0 {
@@ -148,9 +145,7 @@ func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 		} else {
 			rowsAffected, err := _article.Delete()
 			if err != nil {
-				logger.LogError(err)
-				w.WriteHeader(http.StatusInternalServerError)
-				fmt.Fprint(w, "500 服务器内部错误")
+				ac.ResponseForSQLError(w, err)
 			} else {
 				if rowsAffected > 0 {
 					indexURL := route.Name2URL("articles.index")
