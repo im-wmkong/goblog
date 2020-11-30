@@ -5,6 +5,7 @@ import (
 	"goblog/app/models/article"
 	"goblog/app/policies"
 	"goblog/app/requests"
+	"goblog/pkg/auth"
 	"goblog/pkg/logger"
 	"goblog/pkg/route"
 	"goblog/pkg/view"
@@ -49,6 +50,7 @@ func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	_article := article.Article{
 		Title: r.PostFormValue("title"),
 		Body:  r.PostFormValue("body"),
+		UserID: auth.User().ID,
 	}
 
 	// 2. 表单验证
