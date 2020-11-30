@@ -1,13 +1,11 @@
 package requests
 
 import (
-	"fmt"
 	"github.com/thedevsaddam/govalidator"
 	"goblog/app/models/article"
 )
 
 func ValidateArticleForm(data article.Article) map[string][]string {
-	fmt.Println(data)
 	// 1. 定制认证规则
 	rules := govalidator.MapData{
 		"title": []string{"required", "min:3", "max:40"},
