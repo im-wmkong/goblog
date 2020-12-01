@@ -5,10 +5,6 @@ import (
 	"strconv"
 )
 
-func Int64ToString(num int64) string {
-	return strconv.FormatInt(num, 10)
-}
-
 func Uint64ToString(num uint64) string {
 	return strconv.FormatUint(num, 10)
 }
@@ -19,4 +15,8 @@ func StringToInt(str string) int {
 		logger.LogError(err)
 	}
 	return i
+}
+
+func IntToString(i int) string {
+	return strconv.Itoa(i)
 }
