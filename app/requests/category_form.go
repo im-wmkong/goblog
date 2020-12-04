@@ -19,7 +19,7 @@ func ValidateCategoryForm(data category.Category) map[string][]string {
 	}
 
 	opts := govalidator.Options{
-		Data:         &data,
+		Data:          &data,
 		Rules:         rules,
 		Messages:      messages,
 		TagIdentifier: "valid",

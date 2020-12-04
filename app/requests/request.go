@@ -16,7 +16,7 @@ func init() {
 	addMinCn()
 }
 
-func addNotExists()  {
+func addNotExists() {
 	govalidator.AddCustomRule("not_exists", func(field string, rule string, message string, value interface{}) error {
 		rng := strings.Split(strings.TrimPrefix(rule, "not_exists:"), ",")
 
@@ -37,7 +37,7 @@ func addNotExists()  {
 	})
 }
 
-func addMaxCn()  {
+func addMaxCn() {
 	govalidator.AddCustomRule("max_cn", func(field string, rule string, message string, value interface{}) error {
 		valLen := utf8.RuneCountInString(value.(string))
 		maxLen := types.StringToInt(strings.TrimPrefix(rule, "max_cn:"))
@@ -51,7 +51,7 @@ func addMaxCn()  {
 	})
 }
 
-func addMinCn()  {
+func addMinCn() {
 	govalidator.AddCustomRule("min_cn", func(field string, rule string, message string, value interface{}) error {
 		valLen := utf8.RuneCountInString(value.(string))
 		minLen := types.StringToInt(strings.TrimPrefix(rule, "min_cn:"))

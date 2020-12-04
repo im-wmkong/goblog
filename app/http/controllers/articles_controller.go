@@ -35,7 +35,7 @@ func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		ac.ResponseForSQLError(w, err)
 	} else {
 		view.Render(w, view.D{
-			"Articles": articles,
+			"Articles":  articles,
 			"PagerData": pagerData,
 		}, "articles.index", "articles._article_meta")
 	}

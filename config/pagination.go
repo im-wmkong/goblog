@@ -2,7 +2,7 @@ package config
 
 import "goblog/pkg/config"
 
-func init()  {
+func init() {
 	config.Add("pagination", config.StrMap{
 		// 默认每页条数
 		"perpage": 10,

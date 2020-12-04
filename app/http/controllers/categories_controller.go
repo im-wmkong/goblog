@@ -12,13 +12,13 @@ type CategoriesController struct {
 	BaseController
 }
 
-func (cc *CategoriesController) Create(w http.ResponseWriter, r *http.Request)  {
+func (cc *CategoriesController) Create(w http.ResponseWriter, r *http.Request) {
 	view.Render(w, view.D{}, "categories.create")
 }
 
-func (cc CategoriesController) Store(w http.ResponseWriter, r *http.Request)  {
+func (cc CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 	_category := category.Category{
-		Name:      r.PostFormValue("name"),
+		Name: r.PostFormValue("name"),
 	}
 	errors := requests.ValidateCategoryForm(_category)
 
@@ -33,11 +33,11 @@ func (cc CategoriesController) Store(w http.ResponseWriter, r *http.Request)  {
 	} else {
 		view.Render(w, view.D{
 			"Category": _category,
-			"Errors": errors,
+			"Errors":   errors,
 		}, "categories.create")
 	}
 }
 
-func (cc CategoriesController) Show(w http.ResponseWriter, r *http.Request)  {
+func (cc CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
 
 }
