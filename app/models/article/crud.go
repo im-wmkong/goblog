@@ -22,7 +22,7 @@ func GetAll(r *http.Request, perPage int) ([]Article, pagination.ViewData, error
 
 	// 1. 初始化分页实例
 	db := model.DB.Model(Article{}).Order("created_at desc")
-	_pager := pagination.New(r, db, route.Name2URL("home"), perPage)
+	_pager := pagination.New(r, db, route.Name2URL("articles.index"), perPage)
 
 	// 2. 获取视图数据
 	viewData := _pager.Paging()
@@ -31,6 +31,15 @@ func GetAll(r *http.Request, perPage int) ([]Article, pagination.ViewData, error
 	var articles []Article
 	_pager.Results(&articles)
 
+	return articles, viewData, nil
+}
+
+func GetByCategoryID(cid string, r *http.Request, perPage int) ([]Article, pagination.ViewData, error) {
+	db := model.DB.Model(Article{}).Where("category_id = ?", cid).Order("created_at desc")
+	_pager := pagination.New(r, db, route.Name2URL("articles.index"), perPage)
+	viewData := _pager.Paging()
+	var articles []Article
+	_pager.Results(&articles)
 	return articles, viewData, nil
 }
 
